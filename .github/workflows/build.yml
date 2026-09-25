@@ -23,3 +23,17 @@ jobs:
       - name: Ustanovka JDK 21
         uses: actions/setup-java@v4
         with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Nastroika Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Sborka moda
+        run: gradle build
+
+      - name: Sohranenie jar faila
+        uses: actions/upload-artifact@v4
+        with:
+          name: AdvancedPvPMod-1.21.4
+          path: build/libs/*.jar
