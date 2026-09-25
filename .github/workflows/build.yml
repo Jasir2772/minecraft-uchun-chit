@@ -2,38 +2,24 @@ name: Build Minecraft Mod
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [main, master]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [main, master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ÐšÐ»Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ñ
+      - name: Klonirovanie repozitoriya
         uses: actions/checkout@v4
 
-      - name: Ð Ð°ÑÐ¿Ð°ÐºÐ¾Ð²ÐºÐ° Ð¸ÑÑ…Ð¾Ð´Ð½Ð¸ÐºÐ¾Ð² Ð¸Ð· zip
+      - name: Raspakovka ishodnikov iz zip
         run: |
           if [ -f AdvancedPvPMod_Fixed2.zip ]; then
             unzip -o AdvancedPvPMod_Fixed2.zip -d .
           fi
 
-      - name: Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° JDK 21
+      - name: Ustanovka JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ° Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Ð¡Ð±Ð¾Ñ€ÐºÐ° Ð¼Ð¾Ð´Ð° (Build)
-        run: gradle build
-
-      - name: Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ .jar Ñ„Ð°Ð¹Ð»Ð° (Artifacts)
-        uses: actions/upload-artifact@v4
-        with:
-          name: AdvancedPvPMod-1.21.4
-          path: build/libs/*.jar
