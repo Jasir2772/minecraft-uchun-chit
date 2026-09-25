@@ -1,0 +1,33 @@
+name: Build Minecraft Mod
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Loyihani klonlash (Checkout)
+        uses: actions/checkout@v4
+
+      - name: JDK 21 ni o'rnatish
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Gradle o'tkazish huquqini berish (Gradle Wrapper)
+        run: chmod +x gradlew
+
+      - name: Modni kompilyatsiya qilish (Build)
+        run: ./gradlew build
+
+      - name: Yig'ilgan .jar faylni saqlab qo'yish (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AdvancedPvPMod-1.21.4
+          path: build/libs/*.jar
